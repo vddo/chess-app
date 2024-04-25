@@ -23,3 +23,10 @@ def init_db():
     db = get_db()
     with current_app.open_resource('schema.sql') as f:
         f.read().decode('utf8')
+
+
+@click.command('init-db')
+def init_db_command():
+"""Clear existing DB and create a new one."""
+    init_db()
+    click.echo('Initialized the database.')
