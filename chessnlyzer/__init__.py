@@ -14,13 +14,13 @@ def create_app():
     except OSError:
         pass
 
-    @app.route('/')
-    def hello():
-        return '<h1>Hello!</h1>'
-
     # Register init-db, close-db at the end of factory func (before return app)
     from . import db
     db.init_app(app)
+
+    from . import blog
+    app.register_blueprint(blog.bp)
+    app.add_url_rule('/', endpoint='index')
 
     return app
 
