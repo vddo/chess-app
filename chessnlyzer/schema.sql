@@ -2,10 +2,10 @@ DROP TABLE IF EXISTS user;
 
 CREATE TABLE user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    blitz TEXT NOT NULL,
-    rapid TEXT NOT NULL,
-    puzzle TEXT NOT NULL,
-    created TEXT NOT NULL,
-    playTime INTEGER NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    blitz INTEGER NOT NULL,
+    rapid INTEGER NOT NULL,
+    puzzle INTEGER NOT NULL,
+    -- created TEXT NOT NULL,
+    -- playTime INTEGER NOT NULL,
 );

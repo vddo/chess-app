@@ -18,8 +18,12 @@ def create_app():
     from . import db
     db.init_app(app)
 
+    from . import clientLichess
+    clientLichess.init_app(app)
+
     from . import blog
     app.register_blueprint(blog.bp)
+    # route('/')... url rule is registered in blueprint, but also needs to be registered in app
     app.add_url_rule('/', endpoint='index')
 
     return app

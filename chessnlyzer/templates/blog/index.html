@@ -1,1 +1,14 @@
+{% extends 'base.html' %}
+{% block header %}
+<h1>{% block title %}My Lichess Account{% endblock %}</h1>
+{% endblock %}
 
+{% block content %}
+<p>
+<ul>
+  <li>Username: </li>
+  <li>Blitz Rating: </li>
+  <li>Rapid Rating: </li>
+</ul>
+</p>
+{% endblock %}
