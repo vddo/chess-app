@@ -10,6 +10,7 @@ bp = Blueprint('blog', __name__)
 
 @bp.route('/')
 def index():
-    db = get_db()
-    chessnlyzer.clientLichess.print_db_type()
+    g.db = get_db()
+    print(g.db)
+    chessnlyzer.clientLichess.get_lichess_account()
     return render_template('blog/index.html')

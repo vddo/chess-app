@@ -6,14 +6,15 @@ import os
 
 # from chessnlyzer.db import get_db
 
+
 def init_app(app):
     pass
 
 
 def print_db_type():
+    TOKEN_PATH = os.path.join(current_app.instance_path, 'lichess.api')
     print(current_app.instance_path)
-    api_path = os.path.join(current_app.instance_path, 'lichess.api')
-    with open(api_path) as f:
+    with open(TOKEN_PATH) as f:
         LICHESS_TOKEN = f.read().split('\n')[0]
 
     print(LICHESS_TOKEN)
@@ -27,6 +28,31 @@ def print_db_type():
     rapid = userdata['perfs']['rapid']['rating']
     puzzle = userdata['perfs']['puzzle']['rating']
 
+    print(username)
+
 
 def get_lichess_account():
-    pass
+    # get lichess data
+    # get db connection
+    # insert data into db
+    TOKEN_PATH = os.path.join(current_app.instance_path, 'lichess.api')
+    with open(TOKEN_PATH) as f:
+        LICHESS_TOKEN = f.read().split('\n')[0]
+
+    session = berserk.TokenSession(LICHESS_TOKEN)
+    client = berserk.Client(session=session)
+
+    userdata = client.account.get()
+    userdata_d = {}
+    userdata_d['username'] = userdata['username']
+    userdata_d['blitz'] = userdata['perfs']['blitz']['rating']
+    userdata_d['rapid'] = userdata['perfs']['rapid']['rating']
+    userdata_d['puzzle'] = userdata['perfs']['puzzle']['rating']
+
+    g.db.execute(
+        'INSERT INTO user (username, blitz, rapid, puzzle)'
+        ' VALUES (?, ?, ?, ?)',
+        (userdata_d['username'], userdata_d['blitz'], userdata_d['rapid'], userdata_d['puzzle'])
+
+    )
+
