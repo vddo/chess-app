@@ -32,9 +32,6 @@ def print_db_type():
 
 
 def get_lichess_account():
-    # get lichess data
-    # get db connection
-    # insert data into db
     TOKEN_PATH = os.path.join(current_app.instance_path, 'lichess.api')
     with open(TOKEN_PATH) as f:
         LICHESS_TOKEN = f.read().split('\n')[0]
@@ -49,10 +46,14 @@ def get_lichess_account():
     userdata_d['rapid'] = userdata['perfs']['rapid']['rating']
     userdata_d['puzzle'] = userdata['perfs']['puzzle']['rating']
 
-    g.db.execute(
-        'INSERT INTO user (username, blitz, rapid, puzzle)'
-        ' VALUES (?, ?, ?, ?)',
-        (userdata_d['username'], userdata_d['blitz'], userdata_d['rapid'], userdata_d['puzzle'])
+    try:
+        g.db.execute(
+            'INSERT INTO user (username, blitz, rapid, puzzle)'
+            ' VALUES (?, ?, ?, ?)',
+            (userdata_d['username'], userdata_d['blitz'], userdata_d['rapid'], userdata_d['puzzle'])
+        )
+        g.db.commit()
 
-    )
+    except g.db.IntegrityError:
+        pass
 

@@ -5,7 +5,5 @@ CREATE TABLE user(
     username TEXT UNIQUE NOT NULL,
     blitz INTEGER NOT NULL,
     rapid INTEGER NOT NULL,
-    puzzle INTEGER NOT NULL,
-    -- created TEXT NOT NULL,
-    -- playTime INTEGER NOT NULL,
+    puzzle INTEGER NOT NULL
 );
