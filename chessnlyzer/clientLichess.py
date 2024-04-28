@@ -40,20 +40,24 @@ def get_lichess_account():
     client = berserk.Client(session=session)
 
     userdata = client.account.get()
-    userdata_d = {}
-    userdata_d['username'] = userdata['username']
-    userdata_d['blitz'] = userdata['perfs']['blitz']['rating']
-    userdata_d['rapid'] = userdata['perfs']['rapid']['rating']
-    userdata_d['puzzle'] = userdata['perfs']['puzzle']['rating']
+    lichess_api_fetch = {}
+    lichess_api_fetch['username'] = userdata['username']
+    lichess_api_fetch['blitz'] = userdata['perfs']['blitz']['rating']
+    lichess_api_fetch['rapid'] = userdata['perfs']['rapid']['rating']
+    lichess_api_fetch['puzzle'] = userdata['perfs']['puzzle']['rating']
 
     try:
         g.db.execute(
             'INSERT INTO user (username, blitz, rapid, puzzle)'
             ' VALUES (?, ?, ?, ?)',
-            (userdata_d['username'], userdata_d['blitz'], userdata_d['rapid'], userdata_d['puzzle'])
+            (lichess_api_fetch['username'], lichess_api_fetch['blitz'], lichess_api_fetch['rapid'], lichess_api_fetch['puzzle'])
         )
         g.db.commit()
 
     except g.db.IntegrityError:
-        pass
-
+        # Update all data with newly fetched from lichess servers.
+        g.db.execute("""
+                         UPDATE user
+                         SET blitz = ?, rapid = ?, puzzle = ?
+                         WHERE username = ?
+                     """, (lichess_api_fetch['blitz'], lichess_api_fetch['rapid'], lichess_api_fetch['puzzle'], lichess_api_fetch['username']))

@@ -12,4 +12,7 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     chessnlyzer.clientLichess.get_lichess_account()
-    return render_template('blog/index.html')
+    sel_res= db.execute('SELECT * FROM user WHERE id=1')
+    userdata = sel_res.fetchone()
+
+    return render_template('blog/index.html', userdata=userdata)

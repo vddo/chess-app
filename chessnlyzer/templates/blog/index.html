@@ -6,9 +6,10 @@
 {% block content %}
 <p>
 <ul>
-  <li>Username: </li>
-  <li>Blitz Rating: </li>
-  <li>Rapid Rating: </li>
+  <li>Username: {{ userdata['username']}}</li>
+  <li>Blitz Rating: {{ userdata['blitz' ] }}</li>
+  <li>Rapid Rating: {{ userdata['rapid' ] }} </li>
+  <li>Puzzle Rating: {{ userdata['puzzle'] }}
 </ul>
 </p>
 {% endblock %}
