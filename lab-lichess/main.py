@@ -1,13 +1,12 @@
-import berserk
+import CGames
+from icecream import ic
 
-with open('./lichess.token') as f:
-    token = f.read()
-    f.close
+def main():
+    ic('Hello')
 
-lines = token.split('\n')
-API_TOKEN = lines[0]
 
-session = berserk.TokenSession(API_TOKEN)
-client = berserk.Client(session=session)
 
-print(client.account.get())
+if __name__ == '__main__':
+    pawn = CGames.Pawn()
+    pawn.init_color('w')
+    ic(pawn.move_1_up([2, 1]))
