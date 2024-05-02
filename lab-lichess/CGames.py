@@ -27,10 +27,15 @@ class Piece:
 
     # [i, j] <- [ranks, lines]
     def move_1_up(self, start: list[int, int]):
+        i, j = start
         if self.color == 'w':
-            i, j = start
-            print(i, j)
-            return [i+1, j]
+            return (i+1, j)
+
+        return (i-1, j)
+
+    # def move_x_up(self, start: list[int, int], x: int):
+        
+
             
 
         
@@ -38,7 +43,10 @@ class Piece:
 
 class Pawn(Piece):
     def init_color(self, col):
-        self.color = col
+        if col in ('w', 'b'):
+            self.color = col
+        else:
+            raise ValueError('Color invalid')
 
 
     def init_pos_coord(self, coord):
