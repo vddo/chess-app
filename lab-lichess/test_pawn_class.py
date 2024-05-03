@@ -11,6 +11,10 @@ pawn_w = CGames.Pawn()
 pawn_w.init_color('w')
 pawn_w.init_pos_coord(coord_a2)
 
+# Init King
+king = CGames.King()
+king.init_pos_coord(coord_a2)
+
 pawn_b = CGames.Pawn()
 pawn_b.init_color('b')
 pawn_b.init_pos_coord(coord_e7)
@@ -29,11 +33,22 @@ def f_pawn_color_error():
 
 def f_pawn_w_available_moves():
     pawn_w.get_moves()
-    return pawn_w.available_moves
+    return pawn_w.avail_moves
 
 def f_pawn_b_available_moves():
     pawn_b.get_moves()
-    return pawn_b.available_moves
+    return pawn_b.avail_moves
+
+def k_moves():
+    return (
+        king.move_x_in_y(king.pos_coordinates, 1, 'ne'),
+        king.move_x_in_y([1, 5], 1, 'n'),
+        king.move_x_in_y([8, 5], 1, 's'),
+        king.move_x_in_y([1, 1], 1, 'nw'),
+        king.move_x_in_y([1, 8], 1, 'se'),
+        king.move_x_in_y([6, 5], 1, 'w'),
+        king.move_x_in_y([4, 5], 1, 'e')
+    )
 
 
 def test_move_up():
@@ -53,3 +68,12 @@ def test_move_up():
     # init moves before init position
     with pytest.raises(ValueError):
         pawn_error.get_moves()
+
+    # Assert king moves
+    assert king.pos_coordinates == coord_a2
+    assert k_moves() == ((3, 2), (2, 5), (7, 5), (2, 0), (0, 9), (6, 4), (4, 6))
+
+
+
+if __name__ == '__main__':
+    k_moves()

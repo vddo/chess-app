@@ -1,4 +1,11 @@
-"""Working on a rudimentary implementation of a Chess Board Game"""
+"""
+Working on a rudimentary implementation of a Chess Board Game
+"""
+
+error_messages = {
+    'init_pos_first': 'Position must be initialized first.',
+    'direction_invalid': 'Direction is invalid',
+}
 
 class CGame:
     def __init__(self):
@@ -8,12 +15,6 @@ class CGame:
         self.turn_count = 0
         self.board_history = []
         self.players_turn = 'w'
-
-
-error_messages = {
-    'init_pos_first': 'Position must be initialized first.',
-    'direction_invalid': 'Direction is invalid',
-}
 
 
 class Board:
@@ -49,11 +50,11 @@ class Piece:
             raise ValueError('Color invalid')
 
 
-    def init_pos_coord(self, coord):
+    def init_pos_coord(self, coord: list[int]):
         self.pos_coordinates = coord
 
 
-    # [i, j] <- [ranks, lines]
+    # [i, j] <- [ranks, files]
     def move_1_up(self, start: list[int]):
         i, j = start
         if self.color == 'w':
