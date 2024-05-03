@@ -12,6 +12,7 @@ class CGame:
 
 error_messages = {
     'init_pos_first': 'Position must be initialized first.',
+    'direction_invalid': 'Direction is invalid',
 }
 
 
@@ -57,15 +58,42 @@ class Piece:
         i, j = start
         if self.color == 'w':
             return (i+1, j)
-
         return (i-1, j)
 
+
     def move_x_up(self, start: list[int], x: int):
+        """This method is primarily for pawns. It distinguishes between piece colors and only moves forward."""
         i, j = start
         if self.color == 'w':
             return (i+x, j)
-
         return (i-x, j)
+
+
+    def move_x_in_y(self, start: list[int], x: int, y: str):
+        """
+        y: str... direction like n (north), s (sourth), ne (northeast)
+        Different to move_x_up this function will only consider one board direction, white pieces in south and black pieces north.
+        """
+        i, j = start
+
+        if y == 'n':
+            return (i + x, j)
+        elif y == 's':
+            return (i - x, j)
+        elif y == 'e':
+            return (i, j + x)
+        elif y == 'w':
+            return (i, j - x)
+        elif y == 'ne':
+            return (i + x, j + x)
+        elif y == 'nw':
+            return (i + x, j - x)
+        elif y == 'se':
+            return (i - x, j + x)
+        elif y == 'sw':
+            return (i - x, j - x)
+        else:
+            raise ValueError()
 
 
 
@@ -73,11 +101,11 @@ class Pawn(Piece):
 
     def get_moves(self):
         if self.pos_coordinates is not None:
-            self.available_moves = []
+            self.avail_moves = []
             tmp_moves = []
             tmp_moves.append(self.move_x_up(self.pos_coordinates, 1))
             tmp_moves.append(self.move_x_up(self.pos_coordinates, 2))
-            self.available_moves = tmp_moves
+            self.avail_moves = tmp_moves
         else:
             raise ValueError('%s' % error_messages['init_pos_first'])
 
