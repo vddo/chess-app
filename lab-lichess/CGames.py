@@ -10,6 +10,11 @@ class CGame:
         self.players_turn = 'w'
 
 
+error_messages = {
+    'init_pos_first': 'Position must be initialized first.',
+}
+
+
 class Board:
     def __init__(self):
         self.players_turn = 'w'
@@ -18,17 +23,15 @@ class Board:
         self.position = []
 
 
-    def valid_move(self, move: list[int, int]) -> bool:
+    def valid_move(self, move: list[int]) -> bool:
         """Takes move from piece and checks if the move is valid in this position"""
-        return
+        return False
 
 
     def init_board(self):
         """Initializes all pieces on their home square."""
         return
 
-
-    
 
 
 class Piece:
@@ -50,25 +53,25 @@ class Piece:
 
 
     # [i, j] <- [ranks, lines]
-    def move_1_up(self, start: list[int, int]):
+    def move_1_up(self, start: list[int]):
         i, j = start
         if self.color == 'w':
             return (i+1, j)
 
         return (i-1, j)
 
-    def move_x_up(self, start: list[int, int], x: int):
+    def move_x_up(self, start: list[int], x: int):
         i, j = start
         if self.color == 'w':
             return (i+x, j)
 
         return (i-x, j)
-        
+
 
 
 class Pawn(Piece):
 
-    def init_avail_moves(self):
+    def get_moves(self):
         if self.pos_coordinates is not None:
             self.available_moves = []
             tmp_moves = []
@@ -76,14 +79,18 @@ class Pawn(Piece):
             tmp_moves.append(self.move_x_up(self.pos_coordinates, 2))
             self.available_moves = tmp_moves
         else:
-            raise ValueError('Position must be initialized first.')
+            raise ValueError('%s' % error_messages['init_pos_first'])
 
     # TODO: promotion
 
 
 class King(Piece):
     """King piece has the most restrictions. It can move in all directions by one square. But it can not move on a square where it would be threatened."""
-    
 
+    def get_moves(self):
+        if self.pos_coordinates is not None:
+            self.available_moves = []
+            tmp_moves = []
 
-
+        else:
+            raise ValueError('%s' % error_messages['init_pos_first'])

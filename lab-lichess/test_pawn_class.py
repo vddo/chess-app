@@ -28,11 +28,11 @@ def f_pawn_color_error():
     return pawn_error.init_color('red')
 
 def f_pawn_w_available_moves():
-    pawn_w.init_avail_moves()
+    pawn_w.get_moves()
     return pawn_w.available_moves
 
 def f_pawn_b_available_moves():
-    pawn_b.init_avail_moves()
+    pawn_b.get_moves()
     return pawn_b.available_moves
 
 
@@ -41,7 +41,7 @@ def test_move_up():
     assert f_move_pawn_w_up() == ((3, 1), (4, 1))
     assert f_move_pawn_b_up() == ((6, 5), (5, 5))
 
-    # Color error 
+    # Color error
     with pytest.raises(ValueError):
         f_pawn_color_error()
 
@@ -52,4 +52,4 @@ def test_move_up():
 
     # init moves before init position
     with pytest.raises(ValueError):
-        pawn_error.init_avail_moves()
+        pawn_error.get_moves()
