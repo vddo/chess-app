@@ -20,6 +20,15 @@ class Board:
 
     def valid_move(self, move: list[int, int]) -> bool:
         """Takes move from piece and checks if the move is valid in this position"""
+        return
+
+
+    def init_board(self):
+        """Initializes all pieces on their home square."""
+        return
+
+
+    
 
 
 class Piece:
@@ -68,6 +77,13 @@ class Pawn(Piece):
             self.available_moves = tmp_moves
         else:
             raise ValueError('Position must be initialized first.')
+
+    # TODO: promotion
+
+
+class King(Piece):
+    """King piece has the most restrictions. It can move in all directions by one square. But it can not move on a square where it would be threatened."""
+    
 
 
 
