@@ -32,10 +32,15 @@ class Board:
         ]
 
 
+
+    def init_piece(self, piece_t: str, n: int, col: str):
+        if piece_t == 'k':
+            for i in range(n):
+
+
     def valid_move(self, move: list[int]) -> bool:
         """Takes move from piece and checks if the move is valid in this position"""
         return False
-
 
     def init_board(self):
         """Initializes all pieces on their home square."""
