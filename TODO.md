@@ -4,11 +4,10 @@
 
 ## TODOS
 
--[] implement init_start_position()
-
-- delete all piece instances
-- init full set of pieces for both colors
-- for all pieces call method go_to_square(home_square)
+- [] implement init_start_position()
+  - delete all piece instances
+  - init full set of pieces for both colors
+  - for all pieces call method go_to_square(home_square)
 
 ## WORKED ON
 
