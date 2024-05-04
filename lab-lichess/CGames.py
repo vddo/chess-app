@@ -23,6 +23,13 @@ class Board:
         self.estimation = 0.0
         self.all_available_moves = []
         self.position = []
+        self.active_pieces = []
+        self.full_set = [
+            ['k', 1, 'w'],
+            ['k', 1, 'b'],
+            ['p', 8, 'w'],
+            ['p', 8, 'b']
+        ]
 
 
     def valid_move(self, move: list[int]) -> bool:
@@ -32,6 +39,11 @@ class Board:
 
     def init_board(self):
         """Initializes all pieces on their home square."""
+        self.active_pieces = []
+
+       # init full set of pieces
+       # for both colors 8 pawns, king on their square
+
         return
 
 
