@@ -37,9 +37,11 @@ class Board:
 
 
 class Piece:
+    home_square = []
+
     def __init__(self):
         self.color = None
-        self.pos_coordinates = None
+        self.current_square = [] # Square is a coordinate [i,j] e.g. [1,]
         self.available_moves = []
 
 
@@ -50,8 +52,8 @@ class Piece:
             raise ValueError('Color invalid')
 
 
-    def init_pos_coord(self, coord: list[int]):
-        self.pos_coordinates = coord
+    def goto_square(self, coord: list[int]):
+        self.current_square = coord
 
 
     # [i, j] <- [ranks, files]
@@ -99,17 +101,24 @@ class Piece:
 
 
 class Pawn(Piece):
+    """Pawn only move straight forward by one square. Starting from the initial sqaure they have an additional opportunity to move two squares forward."""
+    home_square = [
+        [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8],
+        [7,1], [7,2], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8]
+    ]
+
+    def __str__(self):
+        return("%s" % self.current_square)
 
     def get_moves(self):
-        if self.pos_coordinates is not None:
+        if self.current_square is not None:
             self.avail_moves = []
             tmp_moves = []
-            tmp_moves.append(self.move_x_up(self.pos_coordinates, 1))
-            tmp_moves.append(self.move_x_up(self.pos_coordinates, 2))
+            tmp_moves.append(self.move_x_up(self.current_square, 1))
+            tmp_moves.append(self.move_x_up(self.current_square, 2))
             self.avail_moves = tmp_moves
         else:
             raise ValueError('%s' % error_messages['init_pos_first'])
-
     # TODO: promotion
 
 
@@ -117,7 +126,7 @@ class King(Piece):
     """King piece has the most restrictions. It can move in all directions by one square. But it can not move on a square where it would be threatened."""
 
     def get_moves(self):
-        if self.pos_coordinates is not None:
+        if self.current_square is not None:
             self.available_moves = []
             tmp_moves = []
 
