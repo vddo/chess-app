@@ -35,9 +35,8 @@ class Board:
         ]
         self.occupied_squares = set()
 
-
-    def __str__(self):
-        print(self.active_pieces)
+    def __repr__(self):
+        return f'bbbbb {self.active_pieces}'
 
 
     def init_piece(self, piece_t: str, n: int, col: str):
@@ -140,7 +139,7 @@ class Pawn(Piece):
     ]
 
     def __str__(self):
-        return("%s" % self.current_square)
+        return(f'{self.current_square}')
 
     def get_moves(self):
         if self.current_square is not None:
