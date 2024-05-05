@@ -2,6 +2,7 @@
 Working on a rudimentary implementation of a Chess Board Game
 """
 
+from icecream import ic
 import random
 import string
 
@@ -36,18 +37,19 @@ class Board:
         self.occupied_squares = set()
 
     def __repr__(self):
-        return f'bbbbb {self.active_pieces}'
+        return f'{self.active_pieces}'
 
 
-    def init_piece(self, piece_t: str, n: int, col: str):
+    def init_piece(self, piece_t: str, n: int, color: str, id: str | None = None):
         for i in range(n):
-            id = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
+            if id is None:
+                id = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
             match piece_t:
                 case 'k':
-                    self.active_pieces[id] = King
+                    self.active_pieces[id] = King()
                 case 'p':
-                    self.active_pieces[id] = Pawn
-            self.active_pieces[id].init_color(col)
+                    self.active_pieces[id] = Pawn()
+            self.active_pieces[id].init_color(color)
 
 
 
@@ -76,9 +78,9 @@ class Piece:
         self.available_moves = []
 
 
-    def init_color(self, col):
-        if col in ('w', 'b'):
-            self.color = col
+    def init_color(self, color):
+        if color in ('w', 'b'):
+            self.color = color
         else:
             raise ValueError('Color invalid')
 
@@ -155,6 +157,8 @@ class Pawn(Piece):
 
 class King(Piece):
     """King piece has the most restrictions. It can move in all directions by one square. But it can not move on a square where it would be threatened."""
+    def __repr__(self):
+        return f'King Piece with id {}'
 
     def get_moves(self):
         if self.current_square is not None:
