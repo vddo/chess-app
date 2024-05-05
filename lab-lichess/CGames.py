@@ -2,6 +2,9 @@
 Working on a rudimentary implementation of a Chess Board Game
 """
 
+import random
+import string
+
 error_messages = {
     'init_pos_first': 'Position must be initialized first.',
     'direction_invalid': 'Direction is invalid',
@@ -23,19 +26,31 @@ class Board:
         self.estimation = 0.0
         self.all_available_moves = []
         self.position = []
-        self.active_pieces = []
+        self.active_pieces = {}
         self.full_set = [
             ['k', 1, 'w'],
             ['k', 1, 'b'],
             ['p', 8, 'w'],
             ['p', 8, 'b']
         ]
+        self.occupied_squares = set()
 
+
+    def __str__(self):
+        print(self.active_pieces)
 
 
     def init_piece(self, piece_t: str, n: int, col: str):
-        if piece_t == 'k':
-            for i in range(n):
+        for i in range(n):
+            id = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
+            match piece_t:
+                case 'k':
+                    self.active_pieces[id] = King
+                case 'p':
+                    self.active_pieces[id] = Pawn
+            self.active_pieces[id].init_color(col)
+
+
 
 
     def valid_move(self, move: list[int]) -> bool:
@@ -44,7 +59,7 @@ class Board:
 
     def init_board(self):
         """Initializes all pieces on their home square."""
-        self.active_pieces = []
+        self.active_pieces = {}
 
        # init full set of pieces
        # for both colors 8 pawns, king on their square
