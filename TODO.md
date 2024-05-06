@@ -1,3 +1,11 @@
+24-05-07
+
+
+## TODOS
+- implement get_moves for the rest of the pieces
+
+
+
 24-05-05
 
 ## DO NEXT
