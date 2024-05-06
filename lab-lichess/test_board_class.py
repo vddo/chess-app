@@ -8,7 +8,7 @@ def generate_homesquares():
     rows = [1, 2, 7, 8]
     for i in rows:
         for j in range(8):
-            s.add(( i, j ))
+            s.add(( i, j+1 ))
 
     return s
 
@@ -33,7 +33,7 @@ def test_init_board():
     s = generate_homesquares()
     for elem in l_pieces:
         s.remove(b.active_pieces[elem].current_square)
-    assert len(l_pieces) == 0
+    assert len(s) == 14
 
 
 
@@ -44,3 +44,8 @@ if __name__ == '__main__':
     b.init_board()
     l_pieces = list(b.active_pieces.keys())
     print(l_pieces)
+    for key in l_pieces:
+        ic(b.active_pieces[key].current_square)
+        square = b.active_pieces[key].current_square
+        s.remove(square)
+        ic(s)

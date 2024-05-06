@@ -13,10 +13,10 @@ error_messages = {
 
 """Home squares are hard coded. Neccessary to check if piece like pawn is in home square."""
 home_squares = {
-    'k': {'w': [[1, 5],], 'b': [[8, 5],] },
+    'k': {'w': [(1, 5),], 'b': [(8, 5),] },
     'p': {
-        'w': [[2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8]],
-        'b': [[7,1], [7,2], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8]]
+        'w': [(2,1), (2,2), (2,3), (2,4), (2,5), (2,6), (2,7), (2,8)],
+        'b': [(7,1), (7,2), (7,3), (7,4), (7,5), (7,6), (7,7), (7,8)]
     }
 }
 
@@ -84,7 +84,7 @@ class Piece:
     def __init__(self, id):
         self.id = id
         self.color = None
-        self.current_square = [] # Square is a coordinate [i,j] e.g. [1,5]
+        self.current_square = () # Square is a coordinate [i,j] e.g. [1,5]
         self.available_moves = []
         # If True castling is not allowed
         self.moved_yet = False
