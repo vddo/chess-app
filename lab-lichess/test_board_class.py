@@ -17,7 +17,7 @@ b = Board()
 
 # functions
 def b_init_piece():
-    b.init_piece('k', 'b', 'king1')
+    b.init_piece('K', 'b', 'king1')
     tmp = list(b.active_pieces.keys())
     return repr(b.active_pieces[tmp[0]])
 
@@ -28,12 +28,12 @@ def test_init():
 def test_init_board():
     b.init_board()
     l_pieces = list(b.active_pieces.keys())
-    assert len(l_pieces) == 18
+    assert len(l_pieces) == 32
 
     s = generate_homesquares()
     for elem in l_pieces:
         s.remove(b.active_pieces[elem].current_square)
-    assert len(s) == 14
+    assert len(s) == 0
 
 
 

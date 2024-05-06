@@ -13,11 +13,15 @@ error_messages = {
 
 """Home squares are hard coded. Neccessary to check if piece like pawn is in home square."""
 home_squares = {
-    'k': {'w': [(1, 5),], 'b': [(8, 5),] },
-    'p': {
+    'K': {'w': [(1, 5),], 'b': [(8, 5),] },
+    'P': {
         'w': [(2,1), (2,2), (2,3), (2,4), (2,5), (2,6), (2,7), (2,8)],
         'b': [(7,1), (7,2), (7,3), (7,4), (7,5), (7,6), (7,7), (7,8)]
-    }
+    },
+    'Q': {'w': ((1, 4),), 'b': (8, 4)},
+    'B': {'w': ((1, 3), (1, 6)), 'b': ((8, 3), (8, 6))},
+    'N': {'w': ((1, 2), (1, 7)), 'b': ((8, 2), (8, 7))},
+    'R': {'w': ((1, 1), (1, 8)), 'b': ((8, 1), (8, 8))}
 }
 
 class CGame:
@@ -38,10 +42,18 @@ class Board:
         self.position = []
         self.active_pieces = {}
         self.full_set = [
-            ['k', 1, 'w'],
-            ['k', 1, 'b'],
-            ['p', 8, 'w'],
-            ['p', 8, 'b']
+            ['K', 1, 'w'],
+            ['K', 1, 'b'],
+            ['P', 8, 'w'],
+            ['P', 8, 'b'],
+            ['Q', 1, 'w'],
+            ['Q', 1, 'b'],
+            ['B', 2, 'w'],
+            ['B', 2, 'b'],
+            ['N', 2, 'w'],
+            ['N', 2, 'b'],
+            ['R', 2, 'w'],
+            ['R', 2, 'b']
         ]
         self.occupied_squares = set()
 
@@ -53,9 +65,9 @@ class Board:
         if id is None:
             id = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
         match piece_t:
-            case 'k':
+            case 'K':
                 self.active_pieces[id] = King(id)
-            case 'p':
+            case 'P':
                 self.active_pieces[id] = Pawn(id)
         self.active_pieces[id].init_color(color)
         return id
@@ -182,3 +194,18 @@ class King(Piece):
 
         else:
             raise ValueError('%s' % error_messages['init_pos_first'])
+
+
+class Queen(Piece):
+    def __repr__(self):
+        return(f'Queen {self.id}')
+
+    def get_moves(self):
+        return
+
+class Bishop(Piece):
+    def __repr__(self):
+        return(f'Bishop {self.id}')
+
+    def get_moves(self):
+        return
