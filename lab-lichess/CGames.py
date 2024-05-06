@@ -11,6 +11,15 @@ error_messages = {
     'direction_invalid': 'Direction is invalid',
 }
 
+"""Home squares are hard coded. Neccessary to check if piece like pawn is in home square."""
+home_squares = {
+    'k': [[1, 5], [8, 5]],
+    'p': [
+        [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8],
+        [7,1], [7,2], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8]
+    ]
+}
+
 class CGame:
     def __init__(self):
         self.current_board = None
@@ -40,16 +49,16 @@ class Board:
         return f'{self.active_pieces}'
 
 
-    def init_piece(self, piece_t: str, n: int, color: str, id: str | None = None):
-        for i in range(n):
-            if id is None:
-                id = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
-            match piece_t:
-                case 'k':
-                    self.active_pieces[id] = King(id)
-                case 'p':
-                    self.active_pieces[id] = Pawn(id)
-            self.active_pieces[id].init_color(color)
+    def init_piece(self, piece_t: str, color: str, id: str | None = None):
+        if id is None:
+            id = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
+        match piece_t:
+            case 'k':
+                self.active_pieces[id] = King(id)
+            case 'p':
+                self.active_pieces[id] = Pawn(id)
+        self.active_pieces[id].init_color(color)
+        return id
 
 
     def valid_move(self, move: list[int]) -> bool:
@@ -57,14 +66,20 @@ class Board:
         return False
 
     def init_board(self):
-        """Initializes all pieces on their home square."""
+        """Initializes all pieces to their home square."""
         self.active_pieces = {}
 
-       # init full set of pieces
-       # for both colors 8 pawns, king on their square
-
-        return
-
+        # TODO: init 2 kings in black and white
+        # get home squares
+        # for home squares init kings in both colors
+        to_init = [['k', 1, 'w'], ['k', 1, 'b']]
+        for element in self.full_set:
+            piece_t, n, color = element
+            for i in range(n):
+                id = self.init_piece(piece_t, color)
+                last_init_piece = self.active_pieces[id]
+                hs = home_squares[piece_t][i]
+                last_init_piece.goto_square(hs)
 
 
 class Piece:
@@ -73,12 +88,11 @@ class Piece:
     def __init__(self, id):
         self.id = id
         self.color = None
-        self.current_square = [] # Square is a coordinate [i,j] e.g. [1,]
+        self.current_square = [] # Square is a coordinate [i,j] e.g. [1,5]
         self.available_moves = []
+        # If True castling is not allowed
+        self.moved_yet = False
 
-
-    def __repr__(self):
-        return f'id: {self.id}'
 
     def init_color(self, color):
         if color in ('w', 'b'):
@@ -142,6 +156,9 @@ class Pawn(Piece):
         [7,1], [7,2], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8]
     ]
 
+    def __repr__(self):
+        return f'Pawn {self.id}'
+
     def __str__(self):
         return(f'square: {self.current_square}')
 
@@ -160,7 +177,7 @@ class Pawn(Piece):
 class King(Piece):
     """King piece has the most restrictions. It can move in all directions by one square. But it can not move on a square where it would be threatened."""
     def __repr__(self):
-        return(f'King id {self.id}')
+        return(f'King {self.id}')
 
     def get_moves(self):
         if self.current_square is not None:

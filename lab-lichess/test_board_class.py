@@ -9,9 +9,9 @@ b = Board()
 
 # functions
 def b_init_piece():
-    b.init_piece('k', 1, 'b', 'king1')
+    b.init_piece('k', 'b', 'king1')
     tmp = list(b.active_pieces.keys())
     return repr(b.active_pieces[tmp[0]])
 
 def test_init():
-    assert b_init_piece() == ('King id king1')
+    assert b_init_piece() == ('King king1')
