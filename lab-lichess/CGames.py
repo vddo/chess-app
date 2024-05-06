@@ -46,12 +46,10 @@ class Board:
                 id = ''.join(random.choices(string.ascii_letters + string.digits, k=4))
             match piece_t:
                 case 'k':
-                    self.active_pieces[id] = King()
+                    self.active_pieces[id] = King(id)
                 case 'p':
-                    self.active_pieces[id] = Pawn()
+                    self.active_pieces[id] = Pawn(id)
             self.active_pieces[id].init_color(color)
-
-
 
 
     def valid_move(self, move: list[int]) -> bool:
@@ -72,11 +70,15 @@ class Board:
 class Piece:
     home_square = []
 
-    def __init__(self):
+    def __init__(self, id):
+        self.id = id
         self.color = None
         self.current_square = [] # Square is a coordinate [i,j] e.g. [1,]
         self.available_moves = []
 
+
+    def __repr__(self):
+        return f'id: {self.id}'
 
     def init_color(self, color):
         if color in ('w', 'b'):
@@ -141,7 +143,7 @@ class Pawn(Piece):
     ]
 
     def __str__(self):
-        return(f'{self.current_square}')
+        return(f'square: {self.current_square}')
 
     def get_moves(self):
         if self.current_square is not None:
@@ -158,7 +160,7 @@ class Pawn(Piece):
 class King(Piece):
     """King piece has the most restrictions. It can move in all directions by one square. But it can not move on a square where it would be threatened."""
     def __repr__(self):
-        return f'King Piece with id {}'
+        return(f'King id {self.id}')
 
     def get_moves(self):
         if self.current_square is not None:

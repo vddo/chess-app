@@ -8,19 +8,19 @@ coord_a2 = [2, 1]
 coord_e7 = [7, 5]
 
 # Initialize pawn
-pawn_w = CGames.Pawn()
+pawn_w = CGames.Pawn('bd99')
 pawn_w.init_color('w')
 pawn_w.goto_square(coord_a2)
 
 # Init King
-king = CGames.King()
+king = CGames.King('jdje')
 king.goto_square(coord_a2)
 
-pawn_b = CGames.Pawn()
+pawn_b = CGames.Pawn('jd83')
 pawn_b.init_color('b')
 pawn_b.goto_square(coord_e7)
 
-pawn_error = CGames.Pawn()
+pawn_error = CGames.Pawn('e23k')
 
 # Init board
 board = CGames.Board()
