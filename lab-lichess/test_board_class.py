@@ -40,12 +40,8 @@ def test_init_board():
 
 if __name__ == '__main__':
     s = generate_homesquares()
-    print(s)
     b.init_board()
     l_pieces = list(b.active_pieces.keys())
-    print(l_pieces)
     for key in l_pieces:
-        ic(b.active_pieces[key].current_square)
         square = b.active_pieces[key].current_square
-        s.remove(square)
-        ic(s)
+        ic(square)

@@ -18,7 +18,7 @@ home_squares = {
         'w': [(2,1), (2,2), (2,3), (2,4), (2,5), (2,6), (2,7), (2,8)],
         'b': [(7,1), (7,2), (7,3), (7,4), (7,5), (7,6), (7,7), (7,8)]
     },
-    'Q': {'w': ((1, 4),), 'b': (8, 4)},
+    'Q': {'w': ((1, 4),), 'b': ((8, 4),)},
     'B': {'w': ((1, 3), (1, 6)), 'b': ((8, 3), (8, 6))},
     'N': {'w': ((1, 2), (1, 7)), 'b': ((8, 2), (8, 7))},
     'R': {'w': ((1, 1), (1, 8)), 'b': ((8, 1), (8, 8))}
@@ -69,6 +69,15 @@ class Board:
                 self.active_pieces[id] = King(id)
             case 'P':
                 self.active_pieces[id] = Pawn(id)
+            case 'Q':
+                self.active_pieces[id] = Queen(id)
+            case 'B':
+                self.active_pieces[id] = Bishop(id)
+            case 'N':
+                self.active_pieces[id] = Knight(id)
+            case 'R':
+                self.active_pieces[id] = Rook(id)
+
         self.active_pieces[id].init_color(color)
         return id
 
@@ -206,6 +215,22 @@ class Queen(Piece):
 class Bishop(Piece):
     def __repr__(self):
         return(f'Bishop {self.id}')
+
+    def get_moves(self):
+        return
+
+
+class Knight(Piece):
+    def __repr__(self):
+        return(f'Knight {self.id}')
+
+    def get_moves(self):
+        return
+
+
+class Rook(Piece):
+    def __repr__(self):
+        return(f'Rook {self.id}')
 
     def get_moves(self):
         return
