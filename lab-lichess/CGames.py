@@ -13,11 +13,11 @@ error_messages = {
 
 """Home squares are hard coded. Neccessary to check if piece like pawn is in home square."""
 home_squares = {
-    'k': [[1, 5], [8, 5]],
-    'p': [
-        [2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8],
-        [7,1], [7,2], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8]
-    ]
+    'k': {'w': [[1, 5],], 'b': [[8, 5],] },
+    'p': {
+        'w': [[2,1], [2,2], [2,3], [2,4], [2,5], [2,6], [2,7], [2,8]],
+        'b': [[7,1], [7,2], [7,3], [7,4], [7,5], [7,6], [7,7], [7,8]]
+    }
 }
 
 class CGame:
@@ -69,16 +69,12 @@ class Board:
         """Initializes all pieces to their home square."""
         self.active_pieces = {}
 
-        # TODO: init 2 kings in black and white
-        # get home squares
-        # for home squares init kings in both colors
-        to_init = [['k', 1, 'w'], ['k', 1, 'b']]
         for element in self.full_set:
             piece_t, n, color = element
             for i in range(n):
                 id = self.init_piece(piece_t, color)
                 last_init_piece = self.active_pieces[id]
-                hs = home_squares[piece_t][i]
+                hs = home_squares[piece_t][color][i]
                 last_init_piece.goto_square(hs)
 
 
