@@ -3,6 +3,7 @@
 
 ## TODOS
 - implement get_moves for the rest of the pieces
+- implement get_moves_inline for Queen and Rook
 
 
 
