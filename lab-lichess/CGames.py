@@ -142,7 +142,8 @@ class Piece:
     def move_x_in_y(self, start, x: int, y: str):
         """
         y: str... direction like n (north), s (sourth), ne (northeast)
-        Different to move_x_up this function will only consider one board direction, white pieces in south and black pieces north.
+        Different to move_x_up: This function will only consider one board direction, white pieces in south and black pieces north.
+        Can move straight and diagonally.
         """
         i, j = start
 
@@ -165,35 +166,31 @@ class Piece:
         else:
             raise ValueError()
 
+    def to_boarder_straight(self, square) -> list[tuple[int, str]]:
+        """Gets how many squares are to boarder in each direction n, s, w, e."""
+        to_boarder = []
+
+        return to_boarder
+
+
     # TODO: get all possible moves in line like for rooks and queens
     # call move_x_in_y for all squares that are in same filel and row as current_square
     # exclude current_square from moves
-    def get_moves_inline(self):
+    def get_squares_inline(self) -> set[tuple[int]]:
+        """
+        Calls move_x_in_y to get all squares in the same file and row as current_square.
+        Return as set of tuples because elements (tuples) are unique.
+        """
+        squares_inline =  set()
+
+
+        return
+
 
 
 
 class Pawn(Piece):
     """Pawn only move straight forward by one square. Starting from the initial sqaure they have an additional opportunity to move two squares forward."""
-
-    home_square = [
-        [2, 1],
-        [2, 2],
-        [2, 3],
-        [2, 4],
-        [2, 5],
-        [2, 6],
-        [2, 7],
-        [2, 8],
-        [7, 1],
-        [7, 2],
-        [7, 3],
-        [7, 4],
-        [7, 5],
-        [7, 6],
-        [7, 7],
-        [7, 8],
-    ]
-
     def __repr__(self):
         return f"Pawn {self.id}"
 
