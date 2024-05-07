@@ -76,6 +76,9 @@ def test_move_up():
     assert king.current_square == coord_a2
     assert k_moves() == ((3, 2), (2, 5), (7, 5), (2, 0), (0, 9), (6, 4), (4, 6))
 
+def test_to_boarder():
+    assert pawn_b.to_boarder_straight((2, 5)) == [ (3, 'e'), (4, 'w'), (6, 'n'), (1, 's') ]
+
 
 
 if __name__ == '__main__':
