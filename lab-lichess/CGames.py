@@ -44,24 +44,19 @@ class CGame:
 
 class Board:
     def __init__(self):
+        self.id = None
         self.players_turn = "w"
         self.estimation = 0.0
         self.all_available_moves = []
         self.position = []
         self.active_pieces = {}
         self.full_set = [
-            ["K", 1, "w"],
-            ["K", 1, "b"],
-            ["P", 8, "w"],
-            ["P", 8, "b"],
-            ["Q", 1, "w"],
-            ["Q", 1, "b"],
-            ["B", 2, "w"],
-            ["B", 2, "b"],
-            ["N", 2, "w"],
-            ["N", 2, "b"],
-            ["R", 2, "w"],
-            ["R", 2, "b"],
+            ["K", 1, "w"], ["K", 1, "b"],
+            ["P", 8, "w"], ["P", 8, "b"],
+            ["Q", 1, "w"], ["Q", 1, "b"],
+            ["B", 2, "w"], ["B", 2, "b"],
+            ["N", 2, "w"], ["N", 2, "b"],
+            ["R", 2, "w"], ["R", 2, "b"],
         ]
         self.occupied_squares = set()
 
@@ -166,7 +161,7 @@ class Piece:
         else:
             raise ValueError()
 
-    def to_boarder_straight(self, square: tuple[int, int]) -> list[tuple[int, str]]:
+    def to_boarder_straight(self, square: tuple) -> list[tuple[int, str]]:
         """Gets how many squares are to boarder in each direction n, s, w, e."""
         i, j = square
         to_east = 8 - j
@@ -177,18 +172,25 @@ class Piece:
         return to_boarder
 
 
-    # TODO: get all possible moves in line like for rooks and queens
-    # call move_x_in_y for all squares that are in same filel and row as current_square
-    # exclude current_square from moves
-    def get_squares_inline(self) -> set[tuple[int]]:
+    def get_squares_straight(self) -> set[tuple[int, int]]:
         """
-        Calls move_x_in_y to get all squares in the same file and row as current_square.
-        Return as set of tuples because elements (tuples) are unique.
+        Get all squares in same file and rank except current square.
+        Return as set of tuples because elements (tuples).
         """
         squares_inline =  set()
+        if len(self.current_square) == 2:
+            rank, file = self.current_square
+            # In west
+            for i in range(1, 9):
+                squares_inline.add((rank, i))
+            for j in range(1, 9):
+                squares_inline.add((j, file))
+            squares_inline.remove(self.current_square)
 
+        else:
+            raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
 
-        return
+        return squares_inline
 
 
 
@@ -258,5 +260,5 @@ class Rook(Piece):
     def __repr__(self):
         return f"Rook {self.id}"
 
-    def get_moves(self):
-        return
+    def get_moves(self) -> set[tuple[int, int]]:
+        return self.get_squares_straight()
