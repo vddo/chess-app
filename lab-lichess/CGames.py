@@ -166,10 +166,14 @@ class Piece:
         else:
             raise ValueError()
 
-    def to_boarder_straight(self, square) -> list[tuple[int, str]]:
+    def to_boarder_straight(self, square: tuple[int, int]) -> list[tuple[int, str]]:
         """Gets how many squares are to boarder in each direction n, s, w, e."""
-        to_boarder = []
-
+        i, j = square
+        to_east = 8 - j
+        to_west = j - 1
+        to_south = i - 1
+        to_north = 8 - i
+        to_boarder = [ (to_east, 'e'), (to_west, 'w'), (to_north, 'n'), (to_south, 's') ]
         return to_boarder
 
 
