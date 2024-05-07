@@ -172,26 +172,57 @@ class Piece:
         return to_boarder
 
 
-    def get_squares_straight(self) -> set[tuple[int, int]]:
+    def get_squares_straight(self, square_original: tuple[int, int]) -> set[tuple[int, int]]:
         """
         Get all squares in same file and rank except current square.
         Return as set of tuples because elements (tuples).
         """
         squares_inline =  set()
-        if len(self.current_square) == 2:
-            rank, file = self.current_square
-            # In west
+        if len(square_original) == 2:
+            rank, file = square_original
             for i in range(1, 9):
                 squares_inline.add((rank, i))
             for j in range(1, 9):
                 squares_inline.add((j, file))
-            squares_inline.remove(self.current_square)
+            squares_inline.remove(square_original)
 
         else:
             raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
 
         return squares_inline
 
+    def get_squares_diago(self, square_original: tuple[int, int]):
+        """Add all squares diagonally from the argument square to a set and returns it."""
+        if len(square_original) == 2:
+            rank, file = square_original
+            squares_diago = set()
+            # In sw
+            i = 1
+            while ( (rank - i) > 0 and (file - i) > 0 ):
+                squares_diago.add((rank-i, file-i))
+                i = i + 1
+
+            # In nw
+            i = 1
+            while ( (rank + i) < 9 and (file - i) > 0 ):
+                squares_diago.add((rank+i, file-i))
+                i = i + 1
+
+            # In se
+            i = 1
+            while ( (rank - i) > 0 and (file + i) < 9 ):
+                squares_diago.add((rank-i, file+i))
+                i = i + 1
+
+            # In ne
+            i = 1
+            while ( (rank + i) < 9 and (file + i) < 9 ):
+                squares_diago.add((rank+i, file+i))
+                i = i + 1
+
+            return squares_diago
+        else:
+            raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
 
 
 
@@ -235,9 +266,11 @@ class Queen(Piece):
     def __repr__(self):
         return f"Queen {self.id}"
 
-    def get_moves(self):
-        # self.available_moves.append()
-        return
+    def get_moves(self) -> set[tuple[int, int]]:
+        squares_straights = self.get_squares_straight(self.current_square)
+        squares_diago = self.get_squares_diago(self.current_square)
+        moves = squares_diago.union(squares_straights)
+        return moves
 
 
 class Bishop(Piece):

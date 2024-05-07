@@ -22,6 +22,10 @@ pawn_b.goto_square(coord_e7)
 
 pawn_error = CGames.Pawn('e23k')
 
+queen = CGames.Queen('q1')
+queen.init_color('w')
+queen.goto_square((3, 2))
+
 # Init board
 board = CGames.Board()
 
@@ -54,6 +58,19 @@ def k_moves():
         king.move_x_in_y([4, 5], 1, 'e')
     )
 
+def q_moves():
+    queen_moves_og_32 = {
+        (3, 1), (3, 3), (3, 4), (3, 5), (3, 6), (3, 7), (3, 8),
+        (1, 2), (2, 2), (4, 2), (5, 2), (6, 2), (7, 2), (8, 2),
+        (2, 1), (4, 3), (5, 4), (6, 5), (7, 6), (8, 7),
+        (4, 1), (2, 3), (1, 4)
+    }
+    queen_moves = queen.get_moves()
+    for sq in queen_moves:
+        queen_moves_og_32.remove(sq)
+    return queen_moves_og_32
+
+
 def test_move_up():
     # Assert pawn movement
     assert f_move_pawn_w_up() == ((3, 1), (4, 1))
@@ -76,13 +93,24 @@ def test_move_up():
     assert king.current_square == coord_a2
     assert k_moves() == ((3, 2), (2, 5), (7, 5), (2, 0), (0, 9), (6, 4), (4, 6))
 
-def test_to_boarder():
+def test_moves():
     assert pawn_b.to_boarder_straight((2, 5)) == [ (3, 'e'), (4, 'w'), (6, 'n'), (1, 's') ]
+    assert pawn_b.get_squares_straight((2, 5)) == {
+        (2, 1), (2, 2), (2, 3), (2, 4), (2, 6), (2, 7), (2, 8),
+        (1, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5), (8, 5)
+    }
+    assert pawn_b.get_squares_diago((3, 4)) == {
+        (1, 2), (1, 6), (2, 3), (2, 5), (4, 3), (4, 5),
+        (5, 2), (5, 6), (6, 1), (6, 7), (7, 8)
+    }
 
+    q_moves_32 = q_moves()
+    assert len( q_moves_32 ) == 0
 
 
 if __name__ == '__main__':
-    board.init_piece('P', 'w', 'k1')
-    ic(board.active_pieces.keys())
-    l = list(board.active_pieces.keys())
-    ic(board.active_pieces[l[0]])
+    # sq = queen.get_moves()
+    q1 = queen.get_squares_straight((3, 2))
+    q2 = queen.get_squares_diago((3, 2))
+    q3 = q1.union(q2)
+    ic(q1, q2, '\n', q3)
