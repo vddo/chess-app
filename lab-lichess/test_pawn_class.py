@@ -79,7 +79,7 @@ def test_move_up():
 
 
 if __name__ == '__main__':
-    board.init_piece('p', 1, 'w', 'k1')
+    board.init_piece('P', 'w', 'k1')
     ic(board.active_pieces.keys())
     l = list(board.active_pieces.keys())
     ic(board.active_pieces[l[0]])
