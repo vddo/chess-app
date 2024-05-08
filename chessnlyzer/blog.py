@@ -1,7 +1,6 @@
 from flask import (
         Blueprint, g, flash, render_template, request, url_for
     )
-from werkzeug.exceptions import abort
 
 import chessnlyzer.clientLichess
 from chessnlyzer.db import get_db
