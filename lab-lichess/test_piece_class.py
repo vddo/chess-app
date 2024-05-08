@@ -26,6 +26,14 @@ queen = CGames.Queen('q1')
 queen.init_color('w')
 queen.goto_square((3, 2))
 
+bish = CGames.Bishop('id')
+bish.init_color('b')
+bish.goto_square((4, 4))
+
+rook = CGames.Rook('id')
+rook.init_color('b')
+rook.goto_square((8, 8))
+
 # Init board
 board = CGames.Board()
 
@@ -106,6 +114,16 @@ def test_moves():
 
     q_moves_32 = q_moves()
     assert len( q_moves_32 ) == 0
+
+    assert sorted(rook.get_moves()) ==  [
+        (1, 8), (2, 8), (3, 8), (4, 8), (5, 8), (6, 8), (7, 8),
+        (8, 1), (8, 2), (8, 3), (8, 4), (8, 5), (8, 6), (8, 7)
+    ]
+
+    assert sorted(bish.get_moves()) == [
+        (1, 1), (1, 7), (2, 2), (2, 6), (3, 3), (3, 5),
+        (5, 3), (5, 5), (6, 2), (6, 6), (7, 1), (7, 7), (8, 8)
+    ]
 
 
 if __name__ == '__main__':
