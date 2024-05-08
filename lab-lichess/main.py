@@ -1,13 +1,9 @@
-import berserk
+import CGames
+from icecream import ic
 
-with open('./lichess.token') as f:
-    token = f.read()
-    f.close
+def main():
+    b = CGames.Board()
+    ic(b.init_board())
 
-lines = token.split('\n')
-API_TOKEN = lines[0]
-
-session = berserk.TokenSession(API_TOKEN)
-client = berserk.Client(session=session)
-
-print(client.account.get())
+if __name__ == '__main__':
+    main()
