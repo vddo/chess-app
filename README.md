@@ -28,38 +28,6 @@ The main feature is that it fetches my lichess account data and displays it on t
 
 ### Directory Tree
 
-chess-app
-├── README.md
-├── TODO.md
-├── chessnlyzer
-│   ├── **init**.py
-│   ├── blog.py
-│   ├── clientLichess.py
-│   ├── db.py
-│   ├── schema.sql
-│   ├── static
-│   │   └── style.css
-│   └── templates
-│   ├── base.html
-│   └── blog
-│   └── index.html
-├── filetree.md
-└── lab-lichess
-├── CGames.py
-├── ChessGame.ipynb
-├── Model.ipynb
-├── **pycache**
-│   ├── CGames.cpython-312.pyc
-│   ├── test_board_class.cpython-312-pytest-8.2.0.pyc
-│   ├── test_pawn_class.cpython-312-pytest-8.2.0.pyc
-│   └── test_piece_class.cpython-312-pytest-8.2.0.pyc
-├── lichess.api
-├── main.py
-├── nb-move_pieces.ipynb
-├── requirements.txt
-├── test_board_class.py
-└── test_piece_class.py
-
 ### Main Components
 
 The main components are
@@ -72,15 +40,6 @@ The main components are
 ## Main Application
 
 The main application is still work in progress.
-
-lab-lichess
-├── CGames.py
-├── ChessGame.ipynb
-├── lichess.api
-├── main.py
-├── requirements.txt
-├── test_board_class.py
-└── test_piece_class.py
 
 In chess-app/lab-lichess I am working an a rudimentary implementation of the chess game. The first step is to create the game engine that is able to play a complete game of chess.
 
