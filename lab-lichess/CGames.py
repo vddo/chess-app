@@ -117,8 +117,8 @@ class Piece:
         else:
             raise ValueError("Color invalid")
 
-    def goto_square(self, coord):
-        self.current_square = coord
+    def goto_square(self, square: tuple[int, int]):
+        self.current_square = square
 
     # [i, j] <- [ranks, files]
     def move_1_up(self, start):
@@ -127,20 +127,26 @@ class Piece:
             return (i + 1, j)
         return (i - 1, j)
 
-    def move_x_up(self, start, x: int):
+    def move_x_up(self, square_origin, x: int) -> tuple[int, int]:
         """This method is primarily for pawns. It distinguishes between piece colors and only moves forward."""
-        i, j = start
+        if self.square_is_valid(square_origin) is False:
+            raise Exception('Square not valid.')
+
+        i, j = square_origin
         if self.color == "w":
             return (i + x, j)
         return (i - x, j)
 
-    def move_x_in_y(self, start, x: int, y: str):
+    def move_x_in_y(self, square_origin: tuple[int, int], x: int, y: str) -> tuple[int, int]:
         """
         y: str... direction like n (north), s (sourth), ne (northeast)
         Different to move_x_up: This function will only consider one board direction, white pieces in south and black pieces north.
         Can move straight and diagonally.
         """
-        i, j = start
+        if self.square_is_valid(square_origin) is False:
+            raise Exception('Square not valid.')
+
+        i, j = square_origin
 
         if y == "n":
             return (i + x, j)
@@ -161,7 +167,7 @@ class Piece:
         else:
             raise ValueError('Second argument must be a direction like "n", "se".')
 
-    def valid_square(self, square: tuple[int, int]) -> bool:
+    def square_is_valid(self, square: tuple[int, int]) -> bool:
         if len(square) != 2:
             return False
 
@@ -187,7 +193,7 @@ class Piece:
         Get all squares in same file and rank except current square.
         Return as set of tuples because elements (tuples).
         """
-        if self.valid_square(square_original) is False:
+        if self.square_is_valid(square_original) is False:
             raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
 
         squares_inline =  set()
@@ -202,7 +208,7 @@ class Piece:
 
     def get_squares_diago(self, square_original: tuple[int, int]):
         """Add all squares diagonally from the argument square to a set and returns it."""
-        if self.valid_square(square_original) is False:
+        if self.square_is_valid(square_original) is False:
             raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
 
         rank, file = square_original
@@ -238,7 +244,7 @@ class Piece:
         """
         Return a set of tuples with squares a knight could jump to from original square.
         """
-        if self.valid_square(square_origin) is False:
+        if self.square_is_valid(square_origin) is False:
             raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
 
         moves = set()
@@ -265,14 +271,29 @@ class Pawn(Piece):
     def __str__(self):
         return f"square: {self.current_square}"
 
-    def get_moves(self) -> set[tuple[int, int]]:
-        if self.valid_square(self.current_square) is False:
-            raise ValueError("%s" % error_messages["init_pos_first"])
+    def move_1_diago_forward(self, square_origin: tuple[int, int]) -> set[tuple[int, int]]:
+        s = set()
+        i, j = square_origin
+        if self.color == 'w':
+            s.add(self.move_x_in_y(square_origin, 1, 'nw'))
+            s.add(self.move_x_in_y(square_origin, 1, 'ne'))
+        else:
+            s.add(self.move_x_in_y(square_origin, 1, 'sw'))
+            s.add(self.move_x_in_y(square_origin, 1, 'se'))
+        return s
 
+
+    def get_moves(self) -> set[tuple[int, int]]:
         moves = set()
         moves.add(self.move_x_up(self.current_square, 1))
         moves.add(self.move_x_up(self.current_square, 2))
-        return moves
+        diago_forward_by_1 = self.move_1_diago_forward(self.current_square)
+        tmp = moves.union(diago_forward_by_1)
+        result = set()
+        for sq in tmp:
+            if self.square_is_valid(sq):
+                result.add(sq)
+        return result
 
     # TODO: promotion
 
@@ -283,12 +304,16 @@ class King(Piece):
     def __repr__(self):
         return f"King {self.id}"
 
-    def get_moves(self):
-        if self.valid_square(self.current_square):
-            raise ValueError("%s" % error_messages["init_pos_first"])
+    def get_moves(self) -> set[tuple[int, int]]:
 
-        self.available_moves = []
-        tmp_moves = []
+        moves = set()
+        directions = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw']
+        for direct in directions:
+            candidate = self.move_x_in_y(self.current_square, 1, direct)
+            if self.square_is_valid(candidate):
+                moves.add(candidate)
+
+        return moves
 
 
 class Queen(Piece):

@@ -1,11 +1,16 @@
-24-05-07
-
+24-05-08
 
 ## TODOS
+
+- implement check if move is valid
+- check if move take another piece
+
+24-05-07
+
+## TODOS
+
 - implement get_moves for the rest of the pieces
 - implement get_moves_inline for Queen and Rook
-
-
 
 24-05-05
 

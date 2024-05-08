@@ -48,23 +48,24 @@ def f_pawn_color_error():
     return pawn_error.init_color('red')
 
 def f_pawn_w_available_moves():
-    pawn_w.get_moves()
-    return pawn_w.avail_moves
+    return sorted(pawn_w.get_moves())
 
 def f_pawn_b_available_moves():
-    pawn_b.get_moves()
-    return pawn_b.avail_moves
+    return sorted(pawn_b.get_moves())
 
 def k_moves():
     return (
         king.move_x_in_y(king.current_square, 1, 'ne'),
-        king.move_x_in_y([1, 5], 1, 'n'),
-        king.move_x_in_y([8, 5], 1, 's'),
-        king.move_x_in_y([1, 1], 1, 'nw'),
-        king.move_x_in_y([1, 8], 1, 'se'),
-        king.move_x_in_y([6, 5], 1, 'w'),
-        king.move_x_in_y([4, 5], 1, 'e')
+        king.move_x_in_y(( 1, 5 ), 1, 'n'),
+        king.move_x_in_y(( 8, 5 ), 1, 's'),
+        king.move_x_in_y(( 1, 1 ), 1, 'nw'),
+        king.move_x_in_y(( 1, 8 ), 1, 'se'),
+        king.move_x_in_y(( 6, 5 ), 1, 'w'),
+        king.move_x_in_y(( 4, 5 ), 1, 'e')
     )
+
+def k_get_moves():
+    return king.get_moves()
 
 def q_moves():
     queen_moves_og_32 = {
@@ -90,11 +91,11 @@ def test_move_up():
 
 
     # Available pawn moves
-    assert f_pawn_w_available_moves() == [(3, 1), (4, 1)]
-    assert f_pawn_b_available_moves() == [(6, 5), (5, 5)]
+    assert f_pawn_b_available_moves() == [ (5, 5), (6, 4), (6, 5), (6, 6) ]
+    assert f_pawn_w_available_moves() == [ (3, 1), (3, 2), (4, 1) ]
 
     # init moves before init position
-    with pytest.raises(ValueError):
+    with pytest.raises(Exception):
         pawn_error.get_moves()
 
     # Assert king moves
@@ -125,10 +126,11 @@ def test_moves():
         (5, 3), (5, 5), (6, 2), (6, 6), (7, 1), (7, 7), (8, 8)
     ]
 
+    assert sorted(king.get_moves()) == [
+        (1, 1), (1, 2), (2, 2), (3, 1), (3, 2)
+    ]
+
 
 if __name__ == '__main__':
-    # sq = queen.get_moves()
-    q1 = queen.get_squares_straight((3, 2))
-    q2 = queen.get_squares_diago((3, 2))
-    q3 = q1.union(q2)
-    ic(q1, q2, '\n', q3)
+    sq = sorted(pawn_w.get_moves())
+    ic(sorted(sq))
