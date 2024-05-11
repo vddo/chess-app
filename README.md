@@ -41,7 +41,7 @@ The main components are
 
 The main application is still work in progress.
 
-In chess-app/lab-lichess/CGames.py I am working an a rudimentary implementation of the chess game. The first step is to create the game engine that is able to play a complete game of chess.
+In chess-app/game_engine/CGames.py I am working an a rudimentary implementation of the chess game. The first step is to create the game engine that is able to play a complete game of chess.
 
 CGames.py is the game implementation with classes for the Game, the Board, the Pieces and the Position.
 
