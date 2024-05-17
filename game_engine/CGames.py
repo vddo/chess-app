@@ -51,12 +51,18 @@ class Board:
         self.position = []
         self.active_pieces = {}
         self.full_set = [
-            ["K", 1, "w"], ["K", 1, "b"],
-            ["P", 8, "w"], ["P", 8, "b"],
-            ["Q", 1, "w"], ["Q", 1, "b"],
-            ["B", 2, "w"], ["B", 2, "b"],
-            ["N", 2, "w"], ["N", 2, "b"],
-            ["R", 2, "w"], ["R", 2, "b"],
+            ["K", 1, "w"],
+            ["K", 1, "b"],
+            ["P", 8, "w"],
+            ["P", 8, "b"],
+            ["Q", 1, "w"],
+            ["Q", 1, "b"],
+            ["B", 2, "w"],
+            ["B", 2, "b"],
+            ["N", 2, "w"],
+            ["N", 2, "b"],
+            ["R", 2, "w"],
+            ["R", 2, "b"],
         ]
         self.occupied_squares = set()
 
@@ -65,7 +71,8 @@ class Board:
 
     def init_piece(self, piece_t: str, color: str, id: str | None = None):
         if id is None:
-            id = "".join(random.choices(string.ascii_letters + string.digits, k=4))
+            id = "".join(random.choices(
+                string.ascii_letters + string.digits, k=4))
         match piece_t:
             case "K":
                 self.active_pieces[id] = King(id)
@@ -100,6 +107,9 @@ class Board:
                 last_init_piece.goto_square(hs)
 
 
+# TODO: class position
+
+
 class Piece:
     home_square = []
 
@@ -130,21 +140,23 @@ class Piece:
     def move_x_up(self, square_origin, x: int) -> tuple[int, int]:
         """This method is primarily for pawns. It distinguishes between piece colors and only moves forward."""
         if self.square_is_valid(square_origin) is False:
-            raise Exception('Square not valid.')
+            raise Exception("Square not valid.")
 
         i, j = square_origin
         if self.color == "w":
             return (i + x, j)
         return (i - x, j)
 
-    def move_x_in_y(self, square_origin: tuple[int, int], x: int, y: str) -> tuple[int, int]:
+    def move_x_in_y(
+        self, square_origin: tuple[int, int], x: int, y: str
+    ) -> tuple[int, int]:
         """
         y: str... direction like n (north), s (sourth), ne (northeast)
         Different to move_x_up: This function will only consider one board direction, white pieces in south and black pieces north.
         Can move straight and diagonally.
         """
         if self.square_is_valid(square_origin) is False:
-            raise Exception('Square not valid.')
+            raise Exception("Square not valid.")
 
         i, j = square_origin
 
@@ -165,7 +177,8 @@ class Piece:
         elif y == "sw":
             return (i - x, j - x)
         else:
-            raise ValueError('Second argument must be a direction like "n", "se".')
+            raise ValueError(
+                'Second argument must be a direction like "n", "se".')
 
     def square_is_valid(self, square: tuple[int, int]) -> bool:
         if len(square) != 2:
@@ -184,19 +197,23 @@ class Piece:
         to_west = j - 1
         to_south = i - 1
         to_north = 8 - i
-        to_boarder = [ (to_east, 'e'), (to_west, 'w'), (to_north, 'n'), (to_south, 's') ]
+        to_boarder = [(to_east, "e"), (to_west, "w"),
+                      (to_north, "n"), (to_south, "s")]
         return to_boarder
 
-
-    def get_squares_straight(self, square_original: tuple[int, int]) -> set[tuple[int, int]]:
+    def get_squares_straight(
+        self, square_original: tuple[int, int]
+    ) -> set[tuple[int, int]]:
         """
         Get all squares in same file and rank except current square.
         Return as set of tuples because elements (tuples).
         """
         if self.square_is_valid(square_original) is False:
-            raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
+            raise Exception(
+                "Piece.current_square not valid. Probably not initialyzed, yet."
+            )
 
-        squares_inline =  set()
+        squares_inline = set()
         rank, file = square_original
         for i in range(1, 9):
             squares_inline.add((rank, i))
@@ -209,49 +226,60 @@ class Piece:
     def get_squares_diago(self, square_original: tuple[int, int]):
         """Add all squares diagonally from the argument square to a set and returns it."""
         if self.square_is_valid(square_original) is False:
-            raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
+            raise Exception(
+                "Piece.current_square not valid. Probably not initialyzed, yet."
+            )
 
         rank, file = square_original
         squares_diago = set()
         # In sw
         i = 1
-        while ( (rank - i) > 0 and (file - i) > 0 ):
-            squares_diago.add((rank-i, file-i))
+        while (rank - i) > 0 and (file - i) > 0:
+            squares_diago.add((rank - i, file - i))
             i = i + 1
 
         # In nw
         i = 1
-        while ( (rank + i) < 9 and (file - i) > 0 ):
-            squares_diago.add((rank+i, file-i))
+        while (rank + i) < 9 and (file - i) > 0:
+            squares_diago.add((rank + i, file - i))
             i = i + 1
 
         # In se
         i = 1
-        while ( (rank - i) > 0 and (file + i) < 9 ):
-            squares_diago.add((rank-i, file+i))
+        while (rank - i) > 0 and (file + i) < 9:
+            squares_diago.add((rank - i, file + i))
             i = i + 1
 
         # In ne
         i = 1
-        while ( (rank + i) < 9 and (file + i) < 9 ):
-            squares_diago.add((rank+i, file+i))
+        while (rank + i) < 9 and (file + i) < 9:
+            squares_diago.add((rank + i, file + i))
             i = i + 1
 
         return squares_diago
 
-
-    def get_squares_knight(self, square_origin: tuple[int, int]) -> set[tuple[int, int]]:
+    def get_squares_knight(
+        self, square_origin: tuple[int, int]
+    ) -> set[tuple[int, int]]:
         """
         Return a set of tuples with squares a knight could jump to from original square.
         """
         if self.square_is_valid(square_origin) is False:
-            raise Exception('Piece.current_square not valid. Probably not initialyzed, yet.')
+            raise Exception(
+                "Piece.current_square not valid. Probably not initialyzed, yet."
+            )
 
         moves = set()
         rank, file = square_origin
         operations = [
-            (-1, -2), (-2, -1), (-1, 2), (-2, 1),
-            (1, -2), (2, -1), (1, 2), (2, 1)
+            (-1, -2),
+            (-2, -1),
+            (-1, 2),
+            (-2, 1),
+            (1, -2),
+            (2, -1),
+            (1, 2),
+            (2, 1),
         ]
         for op in operations:
             i, j = op
@@ -265,23 +293,25 @@ class Piece:
 
 class Pawn(Piece):
     """Pawn only move straight forward by one square. Starting from the initial sqaure they have an additional opportunity to move two squares forward."""
+
     def __repr__(self):
         return f"Pawn {self.id}"
 
     def __str__(self):
         return f"square: {self.current_square}"
 
-    def move_1_diago_forward(self, square_origin: tuple[int, int]) -> set[tuple[int, int]]:
+    def move_1_diago_forward(
+        self, square_origin: tuple[int, int]
+    ) -> set[tuple[int, int]]:
         s = set()
         i, j = square_origin
-        if self.color == 'w':
-            s.add(self.move_x_in_y(square_origin, 1, 'nw'))
-            s.add(self.move_x_in_y(square_origin, 1, 'ne'))
+        if self.color == "w":
+            s.add(self.move_x_in_y(square_origin, 1, "nw"))
+            s.add(self.move_x_in_y(square_origin, 1, "ne"))
         else:
-            s.add(self.move_x_in_y(square_origin, 1, 'sw'))
-            s.add(self.move_x_in_y(square_origin, 1, 'se'))
+            s.add(self.move_x_in_y(square_origin, 1, "sw"))
+            s.add(self.move_x_in_y(square_origin, 1, "se"))
         return s
-
 
     def get_moves(self) -> set[tuple[int, int]]:
         moves = set()
@@ -305,9 +335,8 @@ class King(Piece):
         return f"King {self.id}"
 
     def get_moves(self) -> set[tuple[int, int]]:
-
         moves = set()
-        directions = ['n', 's', 'e', 'w', 'ne', 'nw', 'se', 'sw']
+        directions = ["n", "s", "e", "w", "ne", "nw", "se", "sw"]
         for direct in directions:
             candidate = self.move_x_in_y(self.current_square, 1, direct)
             if self.square_is_valid(candidate):

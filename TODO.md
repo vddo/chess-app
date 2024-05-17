@@ -1,3 +1,19 @@
+# v0.0.1
+
+Intruduce a new class 'Position'. Each instances will have the attributes:
+
+- turn or move ... can derive from 'Board's turn; starts with 0 and initial 
+position; uneven moves was white; 
+
+- positioning ... [dict] that maps piece id's to sqares; will be needed to check valid moves 
+and captures
+
+- ancestor ... which 'Position' came before; arrow head leading to position from where 
+the current position derived from
+
+
+
+
 24-05-08
 
 ## TODOS
