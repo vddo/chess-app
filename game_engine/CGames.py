@@ -11,7 +11,10 @@ error_messages = {
     "direction_invalid": "Direction is invalid",
 }
 
-"""Home squares are hard coded. Neccessary to check if piece like pawn is in home square."""
+"""
+Home squares are hard coded. Neccessary to check if piece like pawn is in home
+square.
+"""
 home_squares = {
     "K": {
         "w": [
@@ -90,7 +93,10 @@ class Board:
         return id
 
     def valid_move(self, move: list[int]) -> bool:
-        """Takes move from piece and checks if the move is valid in this position"""
+        """
+        Takes move from piece and checks if the move is valid in this position
+        """
+        # TODO: Neet class Position
         return False
 
     def init_board(self):
@@ -106,10 +112,22 @@ class Board:
                 last_init_piece.goto_square(hs)
 
 
-# TODO: class position
 class Position:
-    def __init__(self, move):
+    def __init__(self, move: int, ancestor=None):
         self.move = move
+        self.position = dict()
+        self.ancestor = ancestor
+
+    # TODO: init position
+    def init_position(self):
+        if self.ancestor is None:
+            for i in range(1, 9):
+                for j in range(1, 9):
+                    self.position[(i, j)] = None
+
+    # TODO: passon_position
+    # TODO: set_piece
+    # TODO: get_piece
 
 
 class Piece:
@@ -138,7 +156,8 @@ class Piece:
         return (i - 1, j)
 
     def move_x_up(self, square_origin, x: int) -> tuple[int, int]:
-        """This method is primarily for pawns. It distinguishes between piece colors and only moves forward."""
+        """This method is primarily for pawns. It distinguishes between piece
+        colors and only moves forward."""
         if self.square_is_valid(square_origin) is False:
             raise Exception("Square not valid.")
 
@@ -152,7 +171,8 @@ class Piece:
     ) -> tuple[int, int]:
         """
         y: str... direction like n (north), s (sourth), ne (northeast)
-        Different to move_x_up: This function will only consider one board direction, white pieces in south and black pieces north.
+        Different to move_x_up: This function will only consider one board
+        direction, white pieces in south and black pieces north.
         Can move straight and diagonally.
         """
         if self.square_is_valid(square_origin) is False:
@@ -207,9 +227,7 @@ class Piece:
         Return as set of tuples because elements (tuples).
         """
         if self.square_is_valid(square_original) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed, yet."
-            )
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         squares_inline = set()
         rank, file = square_original
@@ -222,11 +240,10 @@ class Piece:
         return squares_inline
 
     def get_squares_diago(self, square_original: tuple[int, int]):
-        """Add all squares diagonally from the argument square to a set and returns it."""
+        """Add all squares diagonally from the argument square to a set and
+        returns it."""
         if self.square_is_valid(square_original) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed, yet."
-            )
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         rank, file = square_original
         squares_diago = set()
@@ -260,12 +277,11 @@ class Piece:
         self, square_origin: tuple[int, int]
     ) -> set[tuple[int, int]]:
         """
-        Return a set of tuples with squares a knight could jump to from original square.
+        Return a set of tuples with squares a knight could jump to from
+        original square.
         """
         if self.square_is_valid(square_origin) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed, yet."
-            )
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         moves = set()
         rank, file = square_origin
@@ -290,7 +306,9 @@ class Piece:
 
 
 class Pawn(Piece):
-    """Pawn only move straight forward by one square. Starting from the initial sqaure they have an additional opportunity to move two squares forward."""
+    """Pawn only move straight forward by one square. Starting from the
+    initial sqaure they have an additional opportunity to move two squares
+    forward."""
 
     def __repr__(self):
         return f"Pawn {self.id}"
@@ -327,7 +345,9 @@ class Pawn(Piece):
 
 
 class King(Piece):
-    """King piece has the most restrictions. It can move in all directions by one square. But it can not move on a square where it would be threatened."""
+    """King piece has the most restrictions. It can move in all directions by
+    one square. But it can not move on a square where it would be threatened.
+    """
 
     def __repr__(self):
         return f"King {self.id}"
