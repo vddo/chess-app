@@ -11,6 +11,14 @@ and captures
 - ancestor ... which 'Position' came before; arrow head leading to position from where 
 the current position derived from
 
+## positioning
+
+methods:
+- init_positioning... init sqares as keys and put all pieces to there home squares
+- inherit_positioning... call passon_pos from ancestor and take over position
+- passon_pos... return the position
+- set_piece... takes piece id and put in positioning 
+- get_piece... return piece id on square or None
 
 
 

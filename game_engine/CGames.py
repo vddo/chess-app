@@ -71,8 +71,7 @@ class Board:
 
     def init_piece(self, piece_t: str, color: str, id: str | None = None):
         if id is None:
-            id = "".join(random.choices(
-                string.ascii_letters + string.digits, k=4))
+            id = "".join(random.choices(string.ascii_letters + string.digits, k=4))
         match piece_t:
             case "K":
                 self.active_pieces[id] = King(id)
@@ -108,11 +107,12 @@ class Board:
 
 
 # TODO: class position
+class Position:
+    def __init__(self, move):
+        self.move = move
 
 
 class Piece:
-    home_square = []
-
     def __init__(self, id):
         self.id = id
         self.color = None
@@ -177,8 +177,7 @@ class Piece:
         elif y == "sw":
             return (i - x, j - x)
         else:
-            raise ValueError(
-                'Second argument must be a direction like "n", "se".')
+            raise ValueError('Second argument must be a direction like "n", "se".')
 
     def square_is_valid(self, square: tuple[int, int]) -> bool:
         if len(square) != 2:
@@ -197,8 +196,7 @@ class Piece:
         to_west = j - 1
         to_south = i - 1
         to_north = 8 - i
-        to_boarder = [(to_east, "e"), (to_west, "w"),
-                      (to_north, "n"), (to_south, "s")]
+        to_boarder = [(to_east, "e"), (to_west, "w"), (to_north, "n"), (to_south, "s")]
         return to_boarder
 
     def get_squares_straight(
