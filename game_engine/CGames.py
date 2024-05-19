@@ -111,6 +111,9 @@ class Board:
                 last_init_piece = self.active_pieces[id]
                 hs = home_squares[piece_t][color][i]
                 last_init_piece.goto_square(hs)
+        # TODO: create Position instance
+        # TODO: init piece id to position
+        #
 
 
 class Position:
