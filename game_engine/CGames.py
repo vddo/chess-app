@@ -74,7 +74,8 @@ class Board:
 
     def init_piece(self, piece_t: str, color: str, id: str | None = None):
         if id is None:
-            id = "".join(random.choices(string.ascii_letters + string.digits, k=4))
+            id = "".join(random.choices(
+                string.ascii_letters + string.digits, k=4))
         match piece_t:
             case "K":
                 self.active_pieces[id] = King(id)
@@ -118,16 +119,25 @@ class Position:
         self.position = dict()
         self.ancestor = ancestor
 
-    # TODO: init position
     def init_position(self):
         if self.ancestor is None:
             for i in range(1, 9):
                 for j in range(1, 9):
                     self.position[(i, j)] = None
+        # TODO: If ancestor is not None inherit position from ancestor
 
     # TODO: passon_position
+    def passon_position(self):
+        return self.position
+
     # TODO: set_piece
+    def set_piece(self, square: tuple[int, int], id: str):
+        self.position[square] = id
+        return
+
     # TODO: get_piece
+    def get_piece(self, square: tuple[int, int]):
+        return self.position[square]
 
 
 class Piece:
@@ -197,7 +207,8 @@ class Piece:
         elif y == "sw":
             return (i - x, j - x)
         else:
-            raise ValueError('Second argument must be a direction like "n", "se".')
+            raise ValueError(
+                'Second argument must be a direction like "n", "se".')
 
     def square_is_valid(self, square: tuple[int, int]) -> bool:
         if len(square) != 2:
@@ -216,7 +227,8 @@ class Piece:
         to_west = j - 1
         to_south = i - 1
         to_north = 8 - i
-        to_boarder = [(to_east, "e"), (to_west, "w"), (to_north, "n"), (to_south, "s")]
+        to_boarder = [(to_east, "e"), (to_west, "w"),
+                      (to_north, "n"), (to_south, "s")]
         return to_boarder
 
     def get_squares_straight(
@@ -227,7 +239,8 @@ class Piece:
         Return as set of tuples because elements (tuples).
         """
         if self.square_is_valid(square_original) is False:
-            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception(
+                "Piece.current_square not valid. Probably not initialyzed.")
 
         squares_inline = set()
         rank, file = square_original
@@ -243,7 +256,8 @@ class Piece:
         """Add all squares diagonally from the argument square to a set and
         returns it."""
         if self.square_is_valid(square_original) is False:
-            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception(
+                "Piece.current_square not valid. Probably not initialyzed.")
 
         rank, file = square_original
         squares_diago = set()
@@ -281,7 +295,8 @@ class Piece:
         original square.
         """
         if self.square_is_valid(square_origin) is False:
-            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception(
+                "Piece.current_square not valid. Probably not initialyzed.")
 
         moves = set()
         rank, file = square_origin
