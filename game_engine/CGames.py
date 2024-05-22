@@ -51,7 +51,7 @@ class Board:
         self.players_turn = "w"
         self.estimation = 0.0
         self.all_available_moves = []
-        self.position = []
+        self.position = None
         self.active_pieces = {}
         self.full_set = [
             ["K", 1, "w"],
@@ -74,8 +74,7 @@ class Board:
 
     def init_piece(self, piece_t: str, color: str, id: str | None = None):
         if id is None:
-            id = "".join(random.choices(
-                string.ascii_letters + string.digits, k=4))
+            id = "".join(random.choices(string.ascii_letters + string.digits, k=4))
         match piece_t:
             case "K":
                 self.active_pieces[id] = King(id)
@@ -93,16 +92,11 @@ class Board:
         self.active_pieces[id].init_color(color)
         return id
 
-    def valid_move(self, move: list[int]) -> bool:
-        """
-        Takes move from piece and checks if the move is valid in this position
-        """
-        # TODO: Neet class Position
-        return False
-
     def init_board(self):
         """Initializes all pieces to their home square."""
         self.active_pieces = {}
+        # TODO: create Position instance
+        self.position = Position(0)
 
         for element in self.full_set:
             piece_t, n, color = element
@@ -111,9 +105,15 @@ class Board:
                 last_init_piece = self.active_pieces[id]
                 hs = home_squares[piece_t][color][i]
                 last_init_piece.goto_square(hs)
-        # TODO: create Position instance
         # TODO: init piece id to position
-        #
+        # call
+
+    def valid_move(self, move: list[int]) -> bool:
+        """
+        Takes move from piece and checks if the move is valid in this position
+        """
+        # TODO: Neet class Position
+        return False
 
 
 class Position:
@@ -121,6 +121,7 @@ class Position:
         self.move = move
         self.position = dict()
         self.ancestor = ancestor
+        self.init_position()
 
     def init_position(self):
         if self.ancestor is None:
@@ -210,8 +211,7 @@ class Piece:
         elif y == "sw":
             return (i - x, j - x)
         else:
-            raise ValueError(
-                'Second argument must be a direction like "n", "se".')
+            raise ValueError('Second argument must be a direction like "n", "se".')
 
     def square_is_valid(self, square: tuple[int, int]) -> bool:
         if len(square) != 2:
@@ -230,8 +230,7 @@ class Piece:
         to_west = j - 1
         to_south = i - 1
         to_north = 8 - i
-        to_boarder = [(to_east, "e"), (to_west, "w"),
-                      (to_north, "n"), (to_south, "s")]
+        to_boarder = [(to_east, "e"), (to_west, "w"), (to_north, "n"), (to_south, "s")]
         return to_boarder
 
     def get_squares_straight(
@@ -242,8 +241,7 @@ class Piece:
         Return as set of tuples because elements (tuples).
         """
         if self.square_is_valid(square_original) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         squares_inline = set()
         rank, file = square_original
@@ -259,8 +257,7 @@ class Piece:
         """Add all squares diagonally from the argument square to a set and
         returns it."""
         if self.square_is_valid(square_original) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         rank, file = square_original
         squares_diago = set()
@@ -298,8 +295,7 @@ class Piece:
         original square.
         """
         if self.square_is_valid(square_origin) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         moves = set()
         rank, file = square_origin

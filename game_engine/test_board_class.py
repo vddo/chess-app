@@ -1,7 +1,5 @@
-import CGames
 from CGames import Board
 from icecream import ic
-import pytest
 
 
 def generate_homesquares():
