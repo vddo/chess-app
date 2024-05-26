@@ -1,5 +1,9 @@
 # v0.0.1
 
+## TODO
+
+- [ ] while init board place all pieces on sqare in position
+
 Intruduce a new class 'Position'. Each instances will have the attributes:
 
 - turn or move ... can derive from 'Board's turn; starts with 0 and initial 
@@ -18,7 +22,7 @@ methods:
 - inherit_positioning... call passon_pos from ancestor and take over position
 - passon_pos... return the position
 - set_piece... takes piece id and put in positioning 
-- get_piece... return piece id on square or None
+- get_piece...
 
 
 

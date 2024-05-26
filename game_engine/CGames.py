@@ -93,9 +93,10 @@ class Board:
         return id
 
     def init_board(self):
-        """Initializes all pieces to their home square."""
+        """
+        Initializes all pieces to their home square.
+        """
         self.active_pieces = {}
-        # TODO: create Position instance
         self.position = Position(0)
 
         for element in self.full_set:
@@ -112,7 +113,7 @@ class Board:
         """
         Takes move from piece and checks if the move is valid in this position
         """
-        # TODO: Neet class Position
+        # TODO: Need class Position
         return False
 
 
