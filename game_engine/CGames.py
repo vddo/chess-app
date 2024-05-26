@@ -106,8 +106,8 @@ class Board:
                 last_init_piece = self.active_pieces[id]
                 hs = home_squares[piece_t][color][i]
                 last_init_piece.goto_square(hs)
-        # TODO: init piece id to position
-        # call
+                # TODO: init piece id to position
+                self.position.set_piece(hs, id)
 
     def valid_move(self, move: list[int]) -> bool:
         """
