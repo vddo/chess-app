@@ -11,7 +11,7 @@ p = b.position
 
 
 def get_piece(square: tuple[int, int]) -> Piece:
-    id = p.position[square]
+    id = p.get_piece(square)
     return b.active_pieces[id]
 
 

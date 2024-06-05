@@ -135,12 +135,10 @@ class Position:
     def passon_position(self):
         return self.position
 
-    # TODO: set_piece
     def set_piece(self, square: tuple[int, int], id: str):
         self.position[square] = id
         return
 
-    # TODO: get_piece
     def get_piece(self, square: tuple[int, int]):
         return self.position[square]
 

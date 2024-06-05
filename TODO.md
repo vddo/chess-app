@@ -2,7 +2,8 @@
 
 ## TODO
 
-- [ ] while init board place all pieces on sqare in position
+- [x] while init board place all pieces on sqare in position
+- [ ] pass position from ancestor
 
 Intruduce a new class 'Position'. Each instances will have the attributes:
 
