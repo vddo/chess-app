@@ -139,7 +139,9 @@ class Position:
             for i in range(1, 9):
                 for j in range(1, 9):
                     self.position[(i, j)] = None
-        # TODO: If ancestor is not None inherit position from ancestor
+        else:
+            # TODO: If ancestor is not None inherit position from ancestor
+            self.ancestor.passon_position()
 
     # TODO: passon_position
     def passon_position(self):
