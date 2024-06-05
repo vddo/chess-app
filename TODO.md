@@ -4,6 +4,14 @@
 
 - [x] while init board place all pieces on sqare in position
 - [ ] pass position from ancestor
+- [ ] implement Board is valid move
+
+New class(?):
+A class that models a piece move. 
+Needs to generate move notation?
+
+Note:
+An advanced feature is it to do proper notation like if more than one piece can reach a square an alternative notation is used.
 
 Intruduce a new class 'Position'. Each instances will have the attributes:
 
