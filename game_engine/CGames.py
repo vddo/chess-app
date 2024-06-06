@@ -121,15 +121,16 @@ class Board:
 class Position:
     """
     Arguments:
-    move... keeps count what number of piece move was made that resulted to
+    halfturn... keeps count what number of piece move was made that resulted to
     current position.
+    move... the move that lead to this position.
     ancestor... position before last move was made. Only initial position
     without any move made would have no ancestor. Instance of Position inherits
     position from ancestor as a result of the last move.
     """
 
-    def __init__(self, move: int, ancestor=None):
-        self.move = move
+    def __init__(self, halfturn: int, ancestor=None):
+        self.halfturn = halfturn
         self.position = dict()
         self.ancestor = ancestor
         self.init_position()
@@ -140,10 +141,9 @@ class Position:
                 for j in range(1, 9):
                     self.position[(i, j)] = None
         else:
-            # TODO: If ancestor is not None inherit position from ancestor
-            self.ancestor.passon_position()
+            self.position = self.ancestor.passon_position()
+            # TODO: apply move
 
-    # TODO: passon_position
     def passon_position(self):
         return self.position
 

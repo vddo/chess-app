@@ -6,8 +6,9 @@
 - [ ] pass position from ancestor
 - [ ] implement Board is valid move
 
-New class(?):
+New class:
 A class that models a piece move. 
+Fields: square, piece id
 Needs to generate move notation?
 
 Note:
