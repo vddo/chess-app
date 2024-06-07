@@ -33,7 +33,7 @@ methods:
 - inherit_positioning... call passon_pos from ancestor and take over position
 - passon_pos... return the position
 - set_piece... takes piece id and put in positioning 
-- get_piece... return piece id on square or None
+- get_piece...
 
 
 
