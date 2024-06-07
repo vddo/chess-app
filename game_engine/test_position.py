@@ -1,9 +1,9 @@
 import CGames as cg
-from CGames import Board, Position, Piece
+from CGames import Board, Position, Piece, Square_t
 from icecream import ic
 
+# type Square_t = tuple[int, int]
 
-type Square_t = tuple[int, int]
 pos = Position(0)
 pos2 = Position(1, pos)
 b = Board()
@@ -24,8 +24,6 @@ def test_init_position():
 
 
 def test_init_board():
-    # TODO: get id from p.position[square]
-    # get Piece instance from b.active_pieces[id]
     rw1 = get_piece((1, 1))
     assert isinstance(rw1, cg.Rook) and rw1.color == "w"
     qw = get_piece((1, 4))
@@ -44,6 +42,11 @@ def test_init_board():
     bb1 = get_piece((8, 3))
     assert isinstance(bb1, cg.Bishop) and bb1.color == "b"
     return
+
+
+def test_inherit_position():
+    p1_inherit_p = Position(1, p)
+    assert p1_inherit_p.position == p.position
 
 
 if __name__ == "__main__":

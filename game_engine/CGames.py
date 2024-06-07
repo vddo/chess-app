@@ -138,14 +138,7 @@ class Position:
         self.halfturn = halfturn
         self.position = dict()
         self.ancestor = ancestor
-        if self.ancestor is None:
-            self.init_position()
-        else:
-            self.inherit_position()
-            # TODO: apply the last move to position
-
-    def inherit_position(self):
-        self.position = self.ancestor.passon_position()
+        self.init_position()
 
     def init_position(self):
         if self.ancestor is None:
@@ -232,8 +225,7 @@ class Piece:
         elif y == "sw":
             return (i - x, j - x)
         else:
-            raise ValueError(
-                'Second argument must be a direction like "n", "se".')
+            raise ValueError('Second argument must be a direction like "n", "se".')
 
     def square_is_valid(self, square: Square_t) -> bool:
         if len(square) != 2:
@@ -254,8 +246,7 @@ class Piece:
         to_west = j - 1
         to_south = i - 1
         to_north = 8 - i
-        to_boarder = [(to_east, "e"), (to_west, "w"),
-                      (to_north, "n"), (to_south, "s")]
+        to_boarder = [(to_east, "e"), (to_west, "w"), (to_north, "n"), (to_south, "s")]
         return to_boarder
 
     def get_squares_straight(self, square_original: Square_t) -> set[Square_t]:
@@ -264,8 +255,7 @@ class Piece:
         Return as set of tuples because elements (tuples).
         """
         if self.square_is_valid(square_original) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         squares_inline = set()
         rank, file = square_original
@@ -281,8 +271,7 @@ class Piece:
         """Add all squares diagonally from the argument square to a set and
         returns it."""
         if self.square_is_valid(square_original) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
 
         rank, file = square_original
         squares_diago = set()
@@ -318,8 +307,7 @@ class Piece:
         original square.
         """
         if self.square_is_valid(square_origin) is False:
-            raise Exception(
-                "Piece.current_square not valid. Probably not initialyzed.")
+            raise Exception("Piece.current_square not valid. Probably not initialyzed.")
         moves = set()
         rank, file = square_origin
         operations = [
