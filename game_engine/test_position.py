@@ -16,7 +16,7 @@ def get_piece(square: tuple[int, int]) -> Piece:
 
 
 def test_init_position():
-    assert pos.move == 0
+    assert pos.halfturn == 0
     assert len(pos.position.keys()) == 64
     assert pos2.ancestor == pos
 

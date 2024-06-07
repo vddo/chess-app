@@ -2,7 +2,7 @@
 Working on a rudimentary implementation of a Chess Board Game
 """
 
-from icecream import ic
+# from icecream import ic
 import random
 import string
 
@@ -236,7 +236,9 @@ class Piece:
         return True
 
     def to_boarder_straight(self, square: tuple) -> list[tuple[int, str]]:
-        """Gets how many squares are to boarder in each direction n, s, w, e."""
+        """
+        Gets how many squares are to boarder in each direction n, s, w, e.
+        """
         i, j = square
         to_east = 8 - j
         to_west = j - 1
