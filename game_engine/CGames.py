@@ -6,6 +6,8 @@ Working on a rudimentary implementation of a Chess Board Game
 import random
 import string
 
+type Square_t = tuple[int, int]
+
 error_messages = {
     "init_pos_first": "Position must be initialized first.",
     "direction_invalid": "Direction is invalid",
