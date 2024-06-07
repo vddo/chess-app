@@ -2,6 +2,8 @@ import CGames as cg
 from CGames import Board, Position, Piece
 from icecream import ic
 
+
+type Square_t = tuple[int, int]
 pos = Position(0)
 pos2 = Position(1, pos)
 b = Board()
@@ -10,7 +12,7 @@ b.init_board()
 p = b.position
 
 
-def get_piece(square: tuple[int, int]) -> Piece:
+def get_piece(square: Square_t) -> Piece:
     id = p.get_piece(square)
     return b.active_pieces[id]
 

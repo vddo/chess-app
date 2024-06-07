@@ -3,7 +3,8 @@
 ## TODO
 
 - [x] while init board place all pieces on sqare in position
-- [ ] pass position from ancestor
+- [x] pass position from ancestor
+- [ ] implement class Move
 - [ ] implement Board is valid move
 
 New class:
