@@ -7,7 +7,7 @@
 - [ ] implement class Move
 - [ ] implement Board is valid move
 
-New class:
+### New class Move
 A class that models a piece move. 
 Fields: square, piece id
 Needs to generate move notation?
