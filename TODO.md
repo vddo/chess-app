@@ -1,5 +1,20 @@
 # v0.0.1
 
+## TODO
+
+- [x] while init board place all pieces on sqare in position
+- [x] pass position from ancestor
+- [ ] implement class Move
+- [ ] implement Board is valid move
+
+### New class Move
+A class that models a piece move. 
+Fields: square, piece id
+Needs to generate move notation?
+
+Note:
+An advanced feature is it to do proper notation like if more than one piece can reach a square an alternative notation is used.
+
 Intruduce a new class 'Position'. Each instances will have the attributes:
 
 - turn or move ... can derive from 'Board's turn; starts with 0 and initial 
